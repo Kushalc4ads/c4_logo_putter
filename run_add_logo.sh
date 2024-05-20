@@ -25,6 +25,3 @@ fi
 echo "Installing required Python packages..."
 pip3 install pillow
 
-echo "Running the add_logo.py script..."
-python3 add_logo.py "$@"
-
