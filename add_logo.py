@@ -2,7 +2,6 @@ import os
 from PIL import Image, ImageEnhance, ImageOps
 from PIL import EpsImagePlugin
 
-# Ensure EPS files can be opened
 EpsImagePlugin.gs_windows_binary = r'gswin64c'
 
 def is_light_image(image, threshold=127):
@@ -15,7 +14,7 @@ def is_light_image(image, threshold=127):
 def add_logo(image, logo_path, position='bottom-right', size_ratio=0.1):
     logo = Image.open(logo_path)
     image_width, image_height = image.size
-    logo.thumbnail((image_width * size_ratio, image_height * size_ratio), Image.ANTIALIAS)
+    logo.thumbnail((image_width * size_ratio, image_height * size_ratio), Image.Resampling.LANCZOS)  # Updated here
     logo_width, logo_height = logo.size
 
     if position == 'bottom-right':
@@ -23,6 +22,7 @@ def add_logo(image, logo_path, position='bottom-right', size_ratio=0.1):
 
     image.paste(logo, position, logo.convert('RGBA'))
     return image
+
 
 def process_images(directory, tagline=False):
     for filename in os.listdir(directory):
